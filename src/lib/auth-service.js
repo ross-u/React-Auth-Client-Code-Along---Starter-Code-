@@ -1,6 +1,6 @@
 import axios from "axios";
 
-class Auth {
+class AuthService {
   constructor() {
     this.auth = axios.create({
       baseURL: "http://localhost:5000",
@@ -9,30 +9,36 @@ class Auth {
   }
 
   signup({ username, password }) {
-    return this.auth
+    const pr = this.auth
       .post("/auth/signup", { username, password })
       .then(({ data }) => data);
     // .then((response) => response.data);
+
+    return pr;
   }
 
   login({ username, password }) {
-    return this.auth
+    const pr = this.auth
       .post("/auth/login", { username, password })
-      .then(({ data }) => data);
-    // .then((response) => response.data);
+      .then((response) => response.data);
+      
+    return pr;
   }
 
   logout() {
-    return this.auth.post("/auth/logout", {}).then(({ data }) => data);
-    // return this.auth.post("/auth/logout", {}).then((response) => response.data);
+    const pr = this.auth.post("/auth/logout", {}).then((response) => response.data);
+    return pr;
   }
 
   me() {
-    return this.auth.get("/auth/me").then(({ data }) => data);
-    // return this.auth.get("/auth/me").then((response) => response.data);
+    const pr = this.auth.get("/auth/me").then((response) => response.data);
+    return pr;
   }
 }
 
-const axiosRequestFunctions = new Auth();
+const authService = new AuthService();
 
-export default axiosRequestFunctions;
+export default authService;
+
+// Service is a set of methods abstracted and placed into a class.
+// In the above case, all axios request calls are abstracted into methods.
